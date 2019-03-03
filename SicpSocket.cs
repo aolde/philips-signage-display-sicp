@@ -9,6 +9,11 @@ namespace PhilipsSignageDisplaySicp
 {
     public class SicpSocket : IDisposable
     {
+        private const int COMMUNICATION_CONTROL = 0x00;
+        private const int NACK_CODE = 0x15;
+        private const int NAV_CODE = 0x18;
+        private const int ACK_CODE = 0x06;
+        private const int BUFFER_SIZE = 1024;
         private Socket socket;
 
         /// <summary>
@@ -77,37 +82,32 @@ namespace PhilipsSignageDisplaySicp
             try
             {
                 EnsureConnected();
-                
-                int bytesSent = socket.Send(message.ToArray());
 
-                byte[] buffer = new byte[1024];
+                socket.Send(message.ToArray());
+
+                byte[] buffer = new byte[BUFFER_SIZE];
                 int bytesReceived = socket.Receive(buffer);
 
-                var sicpResponseMessage = SicpMessage.Parse(buffer, bytesReceived);
+                var responseMessage = SicpMessage.Parse(buffer, bytesReceived);
+                var responseData = responseMessage.Data;
 
-                Console.WriteLine("Response data HEX: {0}", BitConverter.ToString(sicpResponseMessage.Data, 0, sicpResponseMessage.Data.Length));
-                Console.WriteLine("Response data ASCI: {0}", Encoding.ASCII.GetString(sicpResponseMessage.Data, 0, sicpResponseMessage.Data.Length));
-
-                if (sicpResponseMessage.Data[1] == 0x06)
+                if (responseData[0] == COMMUNICATION_CONTROL)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Acknowledge (ACK)!");
-                    Console.ResetColor();
-                }
-                else if (sicpResponseMessage.Data[1] == 0x15)
-                {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Not Acknowledge (NACK)");
-                    Console.ResetColor();
-                }
-                else if (sicpResponseMessage.Data[1] == 0x18)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Not Available (NAV). Command not available, not relevant or cannot execute");
-                    Console.ResetColor();
+                    if (responseMessage.Data[1] == NACK_CODE)
+                    {
+                        throw new SicpNotAcknowledgedException();
+                    }
+                    else if (responseMessage.Data[1] == NAV_CODE)
+                    {
+                        throw new SicpNotAvailableException();
+                    }
+                    else if (responseMessage.Data[1] == ACK_CODE)
+                    {
+                        return responseMessage;
+                    }
                 }
 
-                return sicpResponseMessage;
+                return responseMessage;
             }
             finally
             {
