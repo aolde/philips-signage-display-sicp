@@ -7,22 +7,31 @@ namespace PhilipsSignageDisplaySicp
     public class SicpMessage
     {
         /// <summary>
-        /// The monitor ID to send/recieve messages from. (a.k.a monitor ID). Signal mode: Display Address range from 1 to 255. Broadcast mode: Display Address is 0 which indicates no ACK or Report is expected.
+        /// Gets or sets the monitor ID to send/receive messages to/from. 
+        /// Signal mode: Display Address range from 1 to 255. 
+        /// Broadcast mode: Display Address is 0 which indicates no ACK or Report is expected.
         /// </summary>
-        /// <value>Positive byte value</value>
         public byte MonitorId { get; set; }
 
         /// <summary>
-        /// The group ID to send/recieve messages from.
+        /// Gets or sets the group ID to send/receive messages from.
         /// </summary>
-        /// <value>Positive byte value</value>
         public byte? GroupId { get; set; }
 
         /// <summary>
-        /// The payload data that the message contains.
+        /// Gets or sets the payload data.
         /// </summary>
-        /// <value></value>
         public byte[] Data { get; set; }
+
+        /// <summary>
+        /// Gets the command identifier of the data payload.
+        /// </summary>
+        public byte Command { get => Data != null ? Data[0] : byte.MinValue; }
+
+        /// <summary>
+        /// Gets the command parameters.
+        /// </summary>
+        public byte[] CommandParameters { get => Data != null ? Data.Skip(1).ToArray() : new byte[0]; }
 
         /// <summary>
         /// Defines the format for SICP messages.
@@ -30,7 +39,7 @@ namespace PhilipsSignageDisplaySicp
         /// <param name="monitorId">Monitor ID. Signal mode: Display Address range from 1 to 255. Broadcast mode: Display Address is 0 which indicates no ACK or Report is expected.</param>
         /// <param name="groupId"></param>
         /// <param name="data"></param>
-        public SicpMessage(byte monitorId, byte? groupId = null, byte[] data = null)
+        public SicpMessage(byte monitorId, byte? groupId = null, params byte[] data)
         {
             if (monitorId < 0)
             {
@@ -75,7 +84,6 @@ namespace PhilipsSignageDisplaySicp
 
             return buffer.ToArray();
         }
-
 
         /// <summary>
         /// Parse an array of bytes into a SicpMessage.
