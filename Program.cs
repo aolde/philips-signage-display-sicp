@@ -27,7 +27,15 @@ namespace PhilipsSignageDisplaySicp
                 var led = client.GetLedStrip();
                 Console.WriteLine("Color {0} {1}", led.Enabled, led.Color.Name);
 
-                client.DisableLedStrip();
+                // client.DisableLedStrip();
+
+
+                // client.EnableScreen();
+                // Console.WriteLine("Screen on: {0}", client.IsScreenOn());
+                
+                client.EnableScreen(false);
+                Console.WriteLine("Screen on: {0}", client.IsScreenOn());
+
             }
         }
 
