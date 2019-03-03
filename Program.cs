@@ -20,25 +20,27 @@ namespace PhilipsSignageDisplaySicp
 
             using (socket)
             {
-                var client = new PhilipsSicpClient(socket);
-                // client.GetModelInformation();
-                // client.GetLedStripState();
-                LoopColors(client);
+                var client = new Philips10BDL3051TClient(socket);
+                
+                client.EnableLedStrip(Color.Blue);
+
+                var led = client.GetLedStrip();
+                Console.WriteLine("Color {0} {1}", led.Enabled, led.Color.Name);
+
+                client.DisableLedStrip();
             }
         }
 
-        static void LoopColors(PhilipsSicpClient client)
+        static void LoopColors(Philips10BDL3051TClient client)
         {
             var colorProperties = typeof(Color).GetProperties(BindingFlags.Static | BindingFlags.Public);
             var colors = colorProperties.Select(prop => (Color)prop.GetValue(null, null));
-            // Color[] colors = new[] { Color.Aqua, Color.Green, Color.Red };
             int index = 0;
 
             foreach (var color in colors)
             {
-                // var color = colors[index % colors.Length];
                 Console.WriteLine("Setting color {0}", color);
-                client.SetLedStrip(true, color);
+                client.EnableLedStrip(color);
                 index++;
                 Thread.Sleep(1500);
             }
