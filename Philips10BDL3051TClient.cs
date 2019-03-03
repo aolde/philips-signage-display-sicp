@@ -22,8 +22,8 @@ namespace PhilipsSignageDisplaySicp
     // Scheduling Get V 0x5B
     // Group ID Set V 0x5C
     // Group ID Get V 0x5D
-    // Model Number, FW Version, Build date V 0xA1
-    // Platform and version labels V 0xA2
+    // Model Number, FW Version, Build date V 0xA1 🆗
+    // Platform and version labels V 0xA2 🆗
     // Input Source V 0xAC
     // Current Source V 0xAD
     // External Storage Lock Set V 0xF1
