@@ -22,20 +22,12 @@ namespace PhilipsSignageDisplaySicp
             {
                 var client = new Philips10BDL3051TClient(socket);
                 
+                Console.WriteLine(client.GetPlatformAndModelInfo());
+
                 client.EnableLedStrip(Color.Blue);
 
                 var led = client.GetLedStrip();
-                Console.WriteLine("Color {0} {1}", led.Enabled, led.Color.Name);
-
-                // client.DisableLedStrip();
-
-
-                // client.EnableScreen();
-                // Console.WriteLine("Screen on: {0}", client.IsScreenOn());
-                
-                client.EnableScreen(false);
-                Console.WriteLine("Screen on: {0}", client.IsScreenOn());
-
+                Console.WriteLine("Led strip enabled {0}, color {1}", led.Enabled, led.Color.Name);
             }
         }
 
