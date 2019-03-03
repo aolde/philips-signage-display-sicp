@@ -10,9 +10,13 @@ namespace PhilipsSignageDisplaySicp
         static void Main(string[] args)
         {
             var ipAddress = IPAddress.Parse("192.168.1.132");
-            var client = new PhilipsSicpClient(ipAddress);
 
-            client.GetModelInformation();
+            using (SicpSocket socket = new SicpSocket(ipAddress, 5000, keepAlive: true))
+            {
+                var client = new PhilipsSicpClient(socket);
+                client.GetModelInformation();
+                client.GetLedStripState(); 
+            }
         }
 
         static void LoopColors(PhilipsSicpClient client)
