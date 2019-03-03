@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
@@ -8,9 +9,9 @@ namespace PhilipsSignageDisplaySicp
 {
     public class PhilipsSicpClient
     {
-        private readonly SicpSocket socket;
-        private readonly byte monitorId;
-        private readonly byte groupId;
+        protected readonly SicpSocket socket;
+        protected readonly byte monitorId;
+        protected readonly byte groupId;
 
         public PhilipsSicpClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0)
         {
@@ -19,40 +20,31 @@ namespace PhilipsSignageDisplaySicp
             this.groupId = groupId;
         }
 
-        public void GetModelInformation()
+        public virtual void Set(byte command, params byte[] parameters)
         {
-            socket.Send(new SicpMessage(monitorId, groupId, new byte[] { 0xA2, 0x00 }));
+            List<byte> data = new List<byte> { command };
+            data.AddRange(parameters);
+
+            socket.Send(new SicpMessage(monitorId, groupId, data.ToArray()));
         }
 
-        public void SetPowerState(bool poweredOn)
+        public virtual SicpMessage Get(byte command, params byte[] parameters)
         {
-            const byte setPowerStateCommand = 0x18;
+            List<byte> data = new List<byte> { command };
+            data.AddRange(parameters);
 
-            socket.Send(new SicpMessage(monitorId, groupId, new byte[] { setPowerStateCommand, (poweredOn ? (byte)0x02 : (byte)0x01) }));
+            var responseMessage = socket.Send(new SicpMessage(monitorId, groupId, data.ToArray()));
+            return responseMessage;
         }
 
-        public void SetLedStrip(bool enabled, Color color)
+        public virtual TResult Get<TResult>(byte command, params byte[] parameters) where TResult : ISicpResult, new()
         {
-            const byte setLedStripCommand = 0xF3;
-
-            socket.Send(new SicpMessage(monitorId, groupId, new byte[] { setLedStripCommand, enabled ? (byte)1 : (byte)0, color.R, color.G, color.B }));
-        }
-
-        public void GetLedStripState()
-        {
-            const byte getLedStripCommand = 0xF4;
-
-            socket.Send(new SicpMessage(monitorId, groupId, new byte[] { getLedStripCommand }));
-        }
-
-        public void Set(byte command, params byte[] parameters)
-        {
-            // socket.Send(command);
-        }
-
-        public void Get(byte command, params byte[] parameters)
-        {
-
+            var responseMessage = Get(command, parameters);
+            var result = new TResult();
+            
+            result.Parse(responseMessage.CommandParameters);
+            
+            return result;
         }
     }
 }
