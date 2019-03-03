@@ -20,6 +20,24 @@ namespace PhilipsSignageDisplaySicp
             this.groupId = groupId;
         }
 
+        public virtual string GetPlatformAndModelInfo()
+        {
+            var result = new StringBuilder();
+            result.Append($"Model {GetModelInfo(ModelInfoField.ModelNumber)}, firmware {GetModelInfo(ModelInfoField.FirmwareVersion)}, build date {GetModelInfo(ModelInfoField.BuildDate)}\n");
+            result.Append($"Platform {GetPlatformInfo(PlatformInfoField.PlatformLabel)} (v{GetPlatformInfo(PlatformInfoField.PlatformVersion)}), SICP version {GetPlatformInfo(PlatformInfoField.SICPVersion)}");
+            return result.ToString();
+        }
+
+        public virtual string GetPlatformInfo(PlatformInfoField field)
+        {
+            return Get(SicpCommands.PlatformAndVersionLabels, (byte)field).CommandParameters.ToAsciiString();
+        }
+
+        public virtual string GetModelInfo(ModelInfoField field)
+        {
+            return Get(SicpCommands.ModelNumberFwVersionBuildDate, (byte)field).CommandParameters.ToAsciiString();
+        }
+
         public virtual void Set(byte command, params byte[] parameters)
         {
             List<byte> data = new List<byte> { command };
@@ -41,9 +59,9 @@ namespace PhilipsSignageDisplaySicp
         {
             var responseMessage = Get(command, parameters);
             var result = new TResult();
-            
+
             result.Parse(responseMessage.CommandParameters);
-            
+
             return result;
         }
     }
