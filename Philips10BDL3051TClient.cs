@@ -19,8 +19,8 @@ namespace PhilipsSignageDisplaySicp
     // Factory Reset Set V 0x56
     // Scheduling Set V 0x5A
     // Scheduling Get V 0x5B
-    // Group ID Set V 0x5C
-    // Group ID Get V 0x5D
+    // Group ID Set V 0x5C 🆗
+    // Group ID Get V 0x5D 🆗
     // Model Number, FW Version, Build date V 0xA1 🆗
     // Platform and version labels V 0xA2 🆗
     // Input Source V 0xAC
@@ -34,6 +34,16 @@ namespace PhilipsSignageDisplaySicp
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
 
+        public virtual byte GetGroupId()
+        {
+            return Get(SicpCommands.GroupIDGet).CommandParameters[0];
+        }
+
+        public virtual void SetGroupId(byte groupId)
+        {
+            Set(SicpCommands.GroupIDSet, groupId);
+        }
+
         public virtual double GetVolume()
         {
             var speakerVolumeResult = Get<SpeakerVolumeResult>(SicpCommands.VolumeGet);
@@ -46,12 +56,12 @@ namespace PhilipsSignageDisplaySicp
             {
                 throw new ArgumentOutOfRangeException(nameof(speakerVolumePercentage), "Speaker volume should be between 0.0 and 1.0. Example 0.5 = 50 %.");
             }
-            
+
             var volume = (byte)(speakerVolumePercentage * 100);
 
             // it was not possible to set different values for Audio Out and Speaker volume with 10BDL3051T
             // so setting both to the same value
-            Set(SicpCommands.VolumeSet, volume, volume); 
+            Set(SicpCommands.VolumeSet, volume, volume);
         }
 
         public virtual bool IsScreenOn()
