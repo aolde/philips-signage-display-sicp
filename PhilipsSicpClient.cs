@@ -39,6 +39,11 @@ namespace PhilipsSignageDisplaySicp
             return Get(SicpCommands.ModelNumberFwVersionBuildDate, (byte)field).CommandParameters.ToAsciiString();
         }
 
+        public virtual void Set(byte command, ISicpCommandParameters parameters)
+        {
+            Set(command, parameters.ToBytes());
+        }
+
         public virtual void Set(byte command, params byte[] parameters)
         {
             List<byte> data = new List<byte> { command };
