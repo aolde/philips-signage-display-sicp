@@ -34,6 +34,16 @@ namespace PhilipsSignageDisplaySicp
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
 
+        public virtual PowerOnLogo GetPowerOnLogo()
+        {
+            return (PowerOnLogo)Get(SicpCommands.PowerOnLogoGet).CommandParameters[0];
+        }
+
+        public virtual void SetPowerOnLogo(PowerOnLogo powerOnLogo)
+        {
+            Set(SicpCommands.PowerOnLogoSet, (byte)powerOnLogo);
+        }
+
         public virtual string GetSerialCode()
         {
             var message = Get(SicpCommands.SerialCodeGet);
