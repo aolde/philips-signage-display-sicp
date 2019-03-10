@@ -10,8 +10,8 @@ namespace PhilipsSignageDisplaySicp
     // Serial Code Get V 0x15
     // Power state Set V 0x18 (Screen status only) 🆗
     // Power state Get V 0x19 (Screen status only) 🆗
-    // Touch Feature Set V 0x1E
-    // Touch Feature Get V 0x1F
+    // Touch Feature Set V 0x1E 🆗
+    // Touch Feature Get V 0x1F 🆗
     // Power On logo Set V 0x3E
     // Power On logo Get V 0x3F
     // Audio Volume Set V 0x44 🆗
@@ -33,6 +33,17 @@ namespace PhilipsSignageDisplaySicp
     public class Philips10BDL3051TClient : PhilipsSicpClient
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
+
+        public virtual bool IsTouchEnabled()
+        {
+            var message = Get(SicpCommands.TouchFeatureGet);
+            return message.CommandParameters[0] == 0x01;
+        }
+
+        public virtual void SetTouchEnabled(bool enabled = true)
+        {
+            Set(SicpCommands.TouchFeatureSet, enabled.ToByte());
+        }
 
         public virtual byte GetGroupId()
         {
