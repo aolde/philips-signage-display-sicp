@@ -34,6 +34,12 @@ namespace PhilipsSignageDisplaySicp
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
 
+        public virtual string GetSerialCode()
+        {
+            var message = Get(SicpCommands.SerialCodeGet);
+            return message.CommandParameters.ToAsciiString();
+        }
+
         public virtual bool IsTouchEnabled()
         {
             var message = Get(SicpCommands.TouchFeatureGet);
