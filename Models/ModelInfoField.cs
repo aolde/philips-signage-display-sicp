@@ -1,6 +1,6 @@
 namespace PhilipsSignageDisplaySicp.Models
 {
-    public enum ModelInfoField
+    public enum ModelInfoField : byte
     {
         ModelNumber = 0x00,
         FirmwareVersion = 0x01,
