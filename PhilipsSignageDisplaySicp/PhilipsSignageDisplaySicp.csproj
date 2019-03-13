@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    
+    <PackageId>PhilipsSignageDisplaySicp</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Andreas Oldeskog</Authors>
+    <Description>API client for controlling Philips displays that implement Philips SICP protocol.</Description>
+  </PropertyGroup>
+
+</Project>
