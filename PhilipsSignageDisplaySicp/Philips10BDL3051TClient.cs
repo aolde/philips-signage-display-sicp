@@ -42,6 +42,11 @@ namespace PhilipsSignageDisplaySicp
             return Get<Schedule>(SicpCommands.SchedulingGet, (byte)schedule);
         }
 
+        public virtual void FactoryReset()
+        {
+            Set(SicpCommands.FactoryResetSet);
+        }
+
         public virtual PowerOnLogo GetPowerOnLogo()
         {
             return (PowerOnLogo)Get(SicpCommands.PowerOnLogoGet).CommandParameters[0];
