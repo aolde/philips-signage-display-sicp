@@ -1,24 +1,27 @@
 using System;
+using System.Collections;
 using System.Drawing;
+using System.Text;
+using PhilipsSignageDisplaySicp.Models;
 using PhilipsSignageDisplaySicp.Results;
 
 namespace PhilipsSignageDisplaySicp
 {
     // TODO
     // -------------------------------
-    // Miscellaneous info V 0x0F
-    // Serial Code Get V 0x15
+    // Miscellaneous info V 0x0F (operating hours) - IN PROGRESS
+    // Serial Code Get V 0x15 🆗
     // Power state Set V 0x18 (Screen status only) 🆗
     // Power state Get V 0x19 (Screen status only) 🆗
     // Touch Feature Set V 0x1E 🆗
     // Touch Feature Get V 0x1F 🆗
-    // Power On logo Set V 0x3E
-    // Power On logo Get V 0x3F
+    // Power On logo Set V 0x3E 🆗
+    // Power On logo Get V 0x3F 🆗
     // Audio Volume Set V 0x44 🆗
     // Audio Volume Get V 0x45 🆗
     // Factory Reset Set V 0x56
-    // Scheduling Set V 0x5A
-    // Scheduling Get V 0x5B
+    // Scheduling Set V 0x5A  IN PROGRESS
+    // Scheduling Get V 0x5B  🆗
     // Group ID Set V 0x5C 🆗
     // Group ID Get V 0x5D 🆗
     // Model Number, FW Version, Build date V 0xA1 🆗
@@ -33,6 +36,11 @@ namespace PhilipsSignageDisplaySicp
     public class Philips10BDL3051TClient : PhilipsSicpClient
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
+
+        public virtual Schedule GetSchedule(SchedulePage schedule)
+        {
+            return Get<Schedule>(SicpCommands.SchedulingGet, (byte)schedule);
+        }
 
         public virtual PowerOnLogo GetPowerOnLogo()
         {
