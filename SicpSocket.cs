@@ -22,15 +22,22 @@ namespace PhilipsSignageDisplaySicp
         public IPAddress MonitorIPAddress { get; protected set; }
 
         /// <summary>
-        /// Get or sets the port that the SICP protocol is responding to.
+        /// Get or sets the port that the SICP protocol is responding to. Default is 5000.
         /// </summary>
         public int Port { get; protected set; }
 
         /// <summary>
-        /// Gets or sets whether the socket channel should stay connected after a message has been sent and received.
+        /// Gets or sets whether the socket channel should stay connected after a message has been sent and received. 
+        /// If false, the socket will connect and disconnect for each call.
         /// </summary>
         public bool KeepAlive { get; protected set; }
 
+        /// <summary>
+        /// Handles socket communication with the display.
+        /// </summary>
+        /// <param name="monitorIPAddress">Get or sets the IP address of the monitor.</param>
+        /// <param name="port">Get or sets the port that the SICP protocol is responding to. Default is 5000.</param>
+        /// <param name="keepAlive">Gets or sets whether the socket channel should stay connected after a message has been sent and received. If false, the socket will connect and disconnect for each call.</param>
         public SicpSocket(IPAddress monitorIPAddress, int port = 5000, bool keepAlive = false)
         {
             MonitorIPAddress = monitorIPAddress;
