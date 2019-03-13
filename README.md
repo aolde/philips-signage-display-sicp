@@ -3,6 +3,14 @@ API client for controlling Philips displays that implement Philips SICP protocol
 
 WORK IN PROGRESS!
 
+## Install
+
+A prerelease package has been published to Nuget: https://www.nuget.org/packages/PhilipsSignageDisplaySicp
+
+```
+dotnet add package PhilipsSignageDisplaySicp --version 0.1.0-alpha
+```
+
 ## Usage
 
 ```csharp
