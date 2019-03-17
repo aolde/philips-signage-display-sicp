@@ -38,6 +38,11 @@ namespace PhilipsSignageDisplaySicp.Results
                 (byte)Playlist
             };
         }
+
+        public override string ToString()
+        {
+            return $"Enabled: {Enabled}, Time: {StartTime} to {EndTime}, Input: {InputSource}, Playlist: {Playlist}, Days: {WorkingDays}";
+        }
     }
 
 }

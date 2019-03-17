@@ -12,5 +12,10 @@ namespace PhilipsSignageDisplaySicp.Results
             Enabled = parameters[0].ToBool();
             Color = Color.FromArgb(parameters[1], parameters[2], parameters[3]);
         }
+
+        public override string ToString()
+        {
+            return $"Enabled: {Enabled}, Color: {Color}";
+        }
     }
 }
