@@ -46,7 +46,7 @@ See more examples in the [sample console project](https://github.com/aolde/phili
 
 ## Features implemented for Philips 10BDL3051T
 
-![Philips 10BDL3051T](https://github.com/aolde/philips-signage-display-sicp/raw/master/.github/10BDL3051T.png "Philips 10BDL3051T")
+![Philips 10BDL3051T](https://github.com/aolde/philips-signage-display-sicp/raw/master/.github/10bdl3051t.jpg "Philips 10BDL3051T")
 
 To my knowledge this is the complete feature set implemented by 10BDL3051T. 
 
