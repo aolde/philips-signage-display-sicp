@@ -1,4 +1,4 @@
-namespace PhilipsSignageDisplaySicp.Models
+﻿namespace PhilipsSignageDisplaySicp.Models
 {
     public enum InputSource : byte
     {
@@ -26,6 +26,6 @@ namespace PhilipsSignageDisplaySicp.Models
         // Reserved = 0x15,
         MediaPlayer = 0x16,
         PDFPlayer = 0x17,
-        Custom = 0x18,
+        CustomApp = 0x18,
     }
 }
