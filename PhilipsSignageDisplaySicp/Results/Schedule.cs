@@ -11,7 +11,7 @@ namespace PhilipsSignageDisplaySicp.Results
         public bool Enabled { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        public VideoSource VideoSource { get; set; }
+        public InputSource InputSource { get; set; }
         public Playlist Playlist { get; set; }
         public WorkingDays WorkingDays { get; set; }
 
@@ -20,7 +20,7 @@ namespace PhilipsSignageDisplaySicp.Results
             Enabled = parameters[0].ToBool();
             StartTime = parameters[1] == TIMESPAN_NULL_VALUE ? TimeSpan.FromSeconds(0) : new TimeSpan(parameters[1], parameters[2], 0);
             EndTime = parameters[3] == TIMESPAN_NULL_VALUE ? TimeSpan.FromSeconds(0) : new TimeSpan(parameters[3], parameters[4], 0);
-            VideoSource = (VideoSource)parameters[5];
+            InputSource = (InputSource)parameters[5];
             WorkingDays = (WorkingDays)parameters[6];
             Playlist = (Playlist)parameters[7];
         }
@@ -33,7 +33,7 @@ namespace PhilipsSignageDisplaySicp.Results
                 (byte)StartTime.Minutes,
                 (byte)EndTime.Hours,
                 (byte)EndTime.Minutes,
-                (byte)VideoSource,
+                (byte)InputSource,
                 (byte)WorkingDays,
                 (byte)Playlist
             };

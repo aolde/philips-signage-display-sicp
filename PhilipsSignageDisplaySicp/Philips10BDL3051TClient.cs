@@ -26,8 +26,8 @@ namespace PhilipsSignageDisplaySicp
     // Group ID Get V 0x5D 🆗
     // Model Number, FW Version, Build date V 0xA1 🆗
     // Platform and version labels V 0xA2 🆗
-    // Input Source V 0xAC
-    // Current Source V 0xAD
+    // Input Source V 0xAC 🆗
+    // Current Source V 0xAD 🆗
     // External Storage Lock Set V 0xF1
     // External Storage Lock Get V 0xF2
     // Led Control Set V 0xF3 🆗
@@ -36,6 +36,19 @@ namespace PhilipsSignageDisplaySicp
     public class Philips10BDL3051TClient : PhilipsSicpClient
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
+
+        public virtual InputSource GetInputSource()
+        {
+            return (InputSource)Get(SicpCommands.CurrentSource).CommandParameters[0];
+        }
+
+        public virtual void SetInputSource(InputSource inputSource)
+        {
+            byte osdStyle = 1;
+            byte muteStyle = 0;
+
+            Set(SicpCommands.InputSource, (byte)inputSource, (byte)inputSource, osdStyle, muteStyle);
+        }
 
         public virtual TimeSpan GetOperatingHours()
         {

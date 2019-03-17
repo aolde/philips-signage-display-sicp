@@ -1,6 +1,6 @@
 namespace PhilipsSignageDisplaySicp.Models
 {
-    public enum VideoSource : byte
+    public enum InputSource : byte
     {
         None = 0x00,
         Video = 0x01,
