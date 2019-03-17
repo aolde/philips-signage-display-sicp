@@ -19,7 +19,7 @@ namespace PhilipsSignageDisplaySicp
     // Power On logo Get V 0x3F 🆗
     // Audio Volume Set V 0x44 🆗
     // Audio Volume Get V 0x45 🆗
-    // Factory Reset Set V 0x56
+    // Factory Reset Set V 0x56 🆗
     // Scheduling Set V 0x5A  IN PROGRESS
     // Scheduling Get V 0x5B  🆗
     // Group ID Set V 0x5C 🆗
@@ -37,6 +37,11 @@ namespace PhilipsSignageDisplaySicp
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
 
+        public virtual void PerformFactoryReset()
+        {
+            Set(SicpCommands.FactoryResetSet);
+        }
+
         /// <summary>
         /// Checks if external ports like USB or MicroSD are enabled.
         /// </summary>
@@ -45,7 +50,7 @@ namespace PhilipsSignageDisplaySicp
             var isLocked = Get(SicpCommands.ExternalStorageLockGet, 0x00).CommandParameters[0].ToBool();
             return !isLocked;
         }
-        
+
         /// <summary>
         /// Enable or disable access to external ports like USB or MicroSD inputs.
         /// </summary>
