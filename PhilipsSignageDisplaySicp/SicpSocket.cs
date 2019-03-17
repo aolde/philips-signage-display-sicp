@@ -90,7 +90,8 @@ namespace PhilipsSignageDisplaySicp
             {
                 EnsureConnected();
 
-                socket.Send(message.ToArray());
+                var commandData = message.ToArray();
+                socket.Send(commandData);
 
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int bytesReceived = socket.Receive(buffer);
@@ -102,11 +103,11 @@ namespace PhilipsSignageDisplaySicp
                 {
                     if (responseMessage.Data[1] == NACK_CODE)
                     {
-                        throw new SicpNotAcknowledgedException();
+                        throw new SicpNotAcknowledgedException(commandData);
                     }
                     else if (responseMessage.Data[1] == NAV_CODE)
                     {
-                        throw new SicpNotAvailableException();
+                        throw new SicpNotAvailableException(commandData);
                     }
                     else if (responseMessage.Data[1] == ACK_CODE)
                     {
