@@ -84,6 +84,13 @@ namespace PhilipsSignageDisplaySicp
             return Get<Schedule>(SicpCommands.SchedulingGet, (byte)schedule);
         }
 
+        public virtual void SetSchedule(SchedulePage schedulePage, Schedule schedule)
+        {
+            var commandData = schedule.ToBytes();
+            commandData[0] = new TwoNybbles((byte)schedulePage, commandData[0]).Value;
+            Set(SicpCommands.SchedulingSet, commandData);
+        }
+
         public virtual PowerOnLogo GetPowerOnLogo()
         {
             return (PowerOnLogo)Get(SicpCommands.PowerOnLogoGet).CommandParameters[0];
