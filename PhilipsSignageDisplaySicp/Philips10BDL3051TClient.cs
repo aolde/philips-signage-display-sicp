@@ -3,7 +3,6 @@ using System.Collections;
 using System.Drawing;
 using System.Text;
 using PhilipsSignageDisplaySicp.Models;
-using PhilipsSignageDisplaySicp.Results;
 
 namespace PhilipsSignageDisplaySicp
 {

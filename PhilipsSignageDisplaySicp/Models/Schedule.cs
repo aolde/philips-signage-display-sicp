@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using PhilipsSignageDisplaySicp.Models;
 
-namespace PhilipsSignageDisplaySicp.Results
+namespace PhilipsSignageDisplaySicp.Models
 {
     public class Schedule : ISicpResult, ISicpCommandParameters
     {

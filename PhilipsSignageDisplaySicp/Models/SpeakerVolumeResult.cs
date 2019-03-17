@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace PhilipsSignageDisplaySicp.Results
+namespace PhilipsSignageDisplaySicp.Models
 {
     public class SpeakerVolumeResult : ISicpResult
     {
