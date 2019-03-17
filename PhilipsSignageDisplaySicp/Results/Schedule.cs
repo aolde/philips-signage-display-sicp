@@ -44,5 +44,4 @@ namespace PhilipsSignageDisplaySicp.Results
             return $"Enabled: {Enabled}, Time: {StartTime} to {EndTime}, Input: {InputSource}, Playlist: {Playlist}, Days: {WorkingDays}";
         }
     }
-
 }
