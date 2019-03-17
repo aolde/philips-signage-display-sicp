@@ -9,7 +9,7 @@ namespace PhilipsSignageDisplaySicp
 {
     // TODO
     // -------------------------------
-    // Miscellaneous info V 0x0F (operating hours) - IN PROGRESS
+    // Miscellaneous info V 0x0F (operating hours) 🆗
     // Serial Code Get V 0x15 🆗
     // Power state Set V 0x18 (Screen status only) 🆗
     // Power state Get V 0x19 (Screen status only) 🆗
@@ -36,6 +36,13 @@ namespace PhilipsSignageDisplaySicp
     public class Philips10BDL3051TClient : PhilipsSicpClient
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
+
+        public virtual TimeSpan GetOperatingHours()
+        {
+            var sicpMessage = Get(SicpCommands.MiscellaneousInfo, 0x02);
+            // making an assumtion here that [0] is days and [1] is hours
+            return new TimeSpan(sicpMessage.CommandParameters[0], sicpMessage.CommandParameters[1], 0, 0);
+        }
 
         public virtual Schedule GetSchedule(SchedulePage schedule)
         {
