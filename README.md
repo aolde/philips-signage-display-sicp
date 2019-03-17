@@ -48,6 +48,10 @@ See more examples in the [sample console project](https://github.com/aolde/phili
 
 ![Philips 10BDL3051T](https://github.com/aolde/philips-signage-display-sicp/raw/master/.github/10bdl3051t.jpg "Philips 10BDL3051T")
 
+The [Philips 10BDL3051T](https://www.philips.co.uk/p-p/10BDL3051T_00/signage-solutions-multi-touch-display) is a 10 inch tablet running Android 4.4, with hardware and software suitable for signage solutions. It is perfect fit for room booking displays or control panels.
+
+The USA market has an almost identical product called [10BDL4151T](https://www.usa.philips.com/p-p/10BDL4151T_00/signage-solutions-multi-touch-display/).
+
 To my knowledge this is the complete feature set implemented by 10BDL3051T. 
 
 - Controlling LED light
