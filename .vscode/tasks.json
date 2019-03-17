@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/PhilipsSignageDisplaySicp.csproj"
+                "${workspaceFolder}/PhilipsSignageDisplaySicp/PhilipsSignageDisplaySicp.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
