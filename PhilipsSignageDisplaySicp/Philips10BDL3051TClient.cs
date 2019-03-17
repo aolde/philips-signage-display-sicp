@@ -28,14 +28,31 @@ namespace PhilipsSignageDisplaySicp
     // Platform and version labels V 0xA2 🆗
     // Input Source V 0xAC 🆗
     // Current Source V 0xAD 🆗
-    // External Storage Lock Set V 0xF1
-    // External Storage Lock Get V 0xF2
+    // External Storage Lock Set V 0xF1 🆗
+    // External Storage Lock Get V 0xF2 🆗
     // Led Control Set V 0xF3 🆗
     // Led Control Get V 0xF4 🆗
 
     public class Philips10BDL3051TClient : PhilipsSicpClient
     {
         public Philips10BDL3051TClient(SicpSocket socket, byte monitorId = 1, byte groupId = 0) : base(socket, monitorId, groupId) { }
+
+        /// <summary>
+        /// Checks if external ports like USB or MicroSD are enabled.
+        /// </summary>
+        public virtual bool IsExternalPortsEnabled()
+        {
+            var isLocked = Get(SicpCommands.ExternalStorageLockGet, 0x00).CommandParameters[0].ToBool();
+            return !isLocked;
+        }
+        
+        /// <summary>
+        /// Enable or disable access to external ports like USB or MicroSD inputs.
+        /// </summary>
+        public virtual void EnableExternalPorts(bool enabled = true)
+        {
+            Set(SicpCommands.ExternalStorageLockSet, enabled.ToByte(0x00, 0x01));
+        }
 
         public virtual InputSource GetInputSource()
         {
