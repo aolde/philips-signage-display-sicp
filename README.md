@@ -11,10 +11,10 @@ SICP stands for Serial (Ethernet) Interface Communication Protocol.
 
 ## Install
 
-A prerelease package has been published to Nuget: https://www.nuget.org/packages/PhilipsSignageDisplaySicp
+A package has been published to Nuget: https://www.nuget.org/packages/PhilipsSignageDisplaySicp
 
 ```
-dotnet add package PhilipsSignageDisplaySicp --version 0.1.0-alpha
+dotnet add package PhilipsSignageDisplaySicp --version 1.0.1
 ```
 
 ## Usage 
